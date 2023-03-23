@@ -7,20 +7,30 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active" style="text-align:left" name="home">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item" name="memory">
-        <a class="nav-link" href="#">Play Pairs</a>
+        <a class="nav-link" href="pais.php">Play Pairs</a>
       </li>
-      <?php if(isset($_SESSION['user_id'])){ ?>
+      <?php 
+      session_start();
+      if(isset($_SESSION['username'])){ ?>
       <li class="nav-item" name="leaderboard">
-        <a class="nav-link" href="#">Leaderboard</a>
+        <a class="nav-link" href="leaderboard.php">Leaderboard</a>
+        
       </li>
+      <!--<li class="nav-item" name="avatar">
+          <div class="user-avatar">
+            <img class="skin-navbar" src= >
+            <img class="eyes-navbar" src="emoji-assets/eyes/normal.png">
+            <img class="mouth-navbar" src="emoji-assets/mouth/open.png">
+          </div>
+      </li> -->
       <?php } else { ?>
       <li class="nav-item" name="register">
-        <a class="nav-link" href="#">Register</a>
+        <a class="nav-link" href="registration.php">Register</a>
       </li>
       <?php } ?>
     </ul>
