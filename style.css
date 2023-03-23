@@ -1,5 +1,140 @@
-.nav-item{
-    text-align: right;
-    margin-left: auto;
-    margin-right: 0;
+/* Background image */
+#backgroundimage{
+  position: absolute;
+  height: 100%;
+  left: 0;
+  margin: 0;
+  min-height: 100%;
+  min-width: 674px;
+  padding: 0;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+  background-size: cover;
+}
+
+/* Landing page text*/
+#text{
+  position: absolute;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.link-on-landing{
+  text-align: center;
+  text-decoration: none;
+  color: aqua;
+}
+.link-on-landing:hover{
+  text-decoration: none;
+}
+.main-welcome-text{
+  text-align: center;
+  color: azure;
+}
+
+
+/* Avatar options styling */
+.avatar-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+  }
+  
+  .skin {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .eyes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .mouth {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .dropdowns {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .dropdowns select {
+    margin: 0 24px;
+    background-color: blue;
+    color: white;
+    padding: 16px;
+    font-size: 13px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border: none;
+    border-radius: 4px;
+  }
+
+  /* Change color of dropdown links on hover */
+.dropdowns select:hover {background-color: #9dbbed;}
+
+
+  /* Registrantion form */
+.data-entry{
+  border-radius: 5px;
+  border: solid 2px #8a826d;
+  background: rgba(242,242,242,0.5);
+  padding: 20px;
+  width: 40%;
+  margin: auto;
+  margin-top: 50px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+input[type=text]{
+  width: 60%;
+  padding: 12px;
+  border: 1px solid;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+#registration-h2{
+  text-align: center;
+}
+
+input[type=submit] {
+  background-color: blue;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: block;
+}
+
+.link-on-landing{
+  background-color: blue;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
