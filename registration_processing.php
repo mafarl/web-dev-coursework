@@ -15,7 +15,7 @@ if (!preg_match("/^[a-zA-Z ]*$/",$username)) {
     $error_check = true;
     header("Location: ./registration.php");
 }
-if ($error_check) {
+if (!$error_check) {
     $_SESSION['username'] = $username;
 
     $_SESSION['skinAvatar'] = $skin;
