@@ -33,13 +33,13 @@
                     <p>Choose avatar:</p>
                     <!-- Dropdown options for avatar -->
                     <div class="dropdowns">
-                        <select class="dropdown-content skin-select">
+                        <select class="dropdown-content skin-select" name="skin-select-name">
                             <option value="">Select skin</option>
                         </select>
-                        <select class="dropdown-content eyes-select">
+                        <select class="dropdown-content eyes-select" name="eyes-select-name">
                             <option value="">Select eyes</option>
                         </select>
-                        <select class="dropdown-content mouth-select">
+                        <select class="dropdown-content mouth-select" name="mouth-select-name">
                             <option value="">Select mouth</option>
                         </select>
                     </div>
@@ -53,7 +53,7 @@
 
                 <br>
                 <div class="button-entry">
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Submit" name="submit-button">
                 </div>
             </form>
         </div>
