@@ -42,29 +42,3 @@ select.addEventListener("change", function() {
     var selectedOption = skinSelect.options[select.selectedIndex].value;
 	sessionStorage.setItem("selectedOption", selectedOption);
 });
-
-/*document.querySelector('form').addEventListener('submit', function(e){
-    // Get the selected option value
-    var selectedOptionSkin = document.getElementByClassName("skin-select").value;
-    var selectedOptionEyes = document.getElementByClassName("eyes-select").value;
-    var selectedOptionMouth = document.getElementByClassName("mouth-select").value;
-
-    // Store the selected option value in a hidden input field
-    var hiddenInputSkin = document.createElement("input");
-    hiddenInputSkin.type = "hidden";
-    hiddenInputSkin.name = "selectedOptionSkin";
-    hiddenInputSkin.value = selectedOptionSkin;
-    document.body.appendChild(hiddenInputSkin);
-
-    var hiddenInputEyes = document.createElement("input");
-    hiddenInputEyes.type = "hidden";
-    hiddenInputEyes.name = "selectedOptionEyes";
-    hiddenInputEyes.value = selectedOptionEyes;
-    document.body.appendChild(hiddenInputEyes);
-
-    var hiddenInputMouth = document.createElement("input");
-    hiddenInputMouth.type = "hidden";
-    hiddenInputMouth.name = "selectedOptionMouth";
-    hiddenInputMouth.value = selectedOptionMouth;
-    document.body.appendChild(hiddenInputMouth);
-}); */
