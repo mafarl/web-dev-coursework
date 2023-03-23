@@ -37,8 +37,3 @@ function replaceImage(select, img) {
 replaceImage(skinSelect, skinImg);
 replaceImage(eyesSelect, eyesImg);
 replaceImage(mouthSelect, mouthImg);
-
-select.addEventListener("change", function() {
-    var selectedOption = skinSelect.options[select.selectedIndex].value;
-	sessionStorage.setItem("selectedOption", selectedOption);
-});
