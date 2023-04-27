@@ -3,8 +3,14 @@
   session_start();
   include 'navbar.php'; 
 
+  // Check if the leaderboard data exists in the session
+  if (!isset($_SESSION['leaderboard'])) {
+    // Initialize the leaderboard data in the session
+    $_SESSION['leaderboard'] = array();
+  }
+
   // Add a submission to the leaderboard
-  /* function add_submission($username, $level_1_score, $level_2_score, $level_3_score) {
+  function add_submission($username, $level_1_score, $level_2_score, $level_3_score) {
     // Get the leaderboard data from the session
     $leaderboard = $_SESSION['leaderboard'];
 
@@ -42,24 +48,13 @@
 
     // Store the leaderboard data back in the session
     $_SESSION['leaderboard'] = $leaderboard;
-  } */
+  }
 
   if (isset($_POST['level_scores'])) {
     $unsplit = $_POST['level_scores'];
     $scores_array = explode(",", $unsplit);
-
-    // set a cookie to store the session ID
-    setcookie('PHPSESSID', session_id(), time() + 3600);
-
-    // check if the 'submissions' array exists in the session, if not, create it
-    if (!isset($_SESSION['submissions'])) {
-      $_SESSION['submissions'] = array();
-    }
-
-    // store user submissions in the session
-    $_SESSION['submissions'][$_SESSION['username']] = $scores_array;
-
-  } 
+    add_submission($_SESSION["username"], $scores_array[0], $scores_array[1], $scores_array[2]);   
+  }
 
 
   // Display the leaderboard table
@@ -81,8 +76,6 @@
       border-collapse: collapse;
       border-spacing: 2px;
       margin-top: 20px;
-      margin-left: auto;
-      margin-right: auto;
     }
     
     th {
@@ -107,20 +100,7 @@
 
     #wrapper-leaderboard{
       background-color: grey;
-      border-radius: 5px;
-      border: solid 2px #8a826d;
-      padding: 20px;
-      width: 80%;
-      margin: auto;
-      margin-top: 50px;
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-      box-shadow: 5px;  
-    }
-
-    #links-wrapper{
-      text-align: center;
-      margin-left: auto;
-      margin-right: auto;
+      box-shadow: 5px;
     }
   </style>
 </head>
@@ -129,15 +109,7 @@
     <img id="backgroundimage" src="background.jpg" border="0" alt="">
 
     <div id="wrapper-leaderboard">
-      <h2 id="registration-h2">Leaderboard</h2>
-
-      <div id="links-wrapper">
-        <a href="leaderboard.php?level=1" class="link-on-landing">Sort by Level 1</a>
-        <a href="leaderboard.php?level=2" class="link-on-landing">Sort by Level 2</a>
-        <a href="leaderboard.php?level=3" class="link-on-landing">Sort by Level 3</a>
-        <a href="leaderboard.php?level=0" class="link-on-landing">Sort by Total Scores</a>
-     </div>
-
+      <h2>Leaderboard</h2>
       <table>
         <thead>
           <tr>
@@ -151,41 +123,16 @@
         </thead>
         <tbody>
           <?php
-              // Sort the array here and then print out one by one
-              $level = $_GET['level'] ?? null;
-              if ($level === null) {
-                // Display error message or redirect to homepage
-                exit;
-              }
-              
-              if ($level == 0){
-                  
-                  $sums = array();
-                  foreach ($_SESSION['submissions'] as $username => $scores) {
-                      $sums[$username] = array_sum($scores);
-                      
-                  }
-                  array_multisort($sums, SORT_DESC, $_SESSION['submissions']);
-
-              } else {
-                  $sc = array_column($_SESSION['submissions'], ($level - 1));
-                  array_multisort($sc, SORT_DESC, $_SESSION['submissions']);
-              }
-              
-
-
-              // Will be printed out with all the results seen but sorted according to the specific level
               $i = 1;
               // Loop through the leaderboard data and display each user's scores
-              foreach ($_SESSION['submissions'] as $username => $scores) {
+              foreach ($_SESSION['leaderboard'] as $username => $scores) {
               echo '<tr>';
               echo '<td>' . $i . '</td>'; 
               echo '<td>' . $username . '</td>';
-              echo '<td>' . $scores[0] . '</td>';
-              echo '<td>' . $scores[1] . '</td>';
-              echo '<td>' . $scores[2] . '</td>';
-              $totalscore = $scores[0] + $scores[1] + $scores[2];
-              echo '<td>' . $totalscore . '</td>';
+              echo '<td>' . $scores['level_1_score'] . '</td>';
+              echo '<td>' . $scores['level_2_score'] . '</td>';
+              echo '<td>' . $scores['level_3_score'] . '</td>';
+              echo '<td>' . $scores['total_score'] . '</td>';
               echo '</tr>';
               $i = $i + 1;
               }

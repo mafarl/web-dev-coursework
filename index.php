@@ -21,7 +21,8 @@
       ?>
         <br>
         <a href="pairs.php"><button type="button" class="link-on-landing">Click here to play</button></a>
-      <?php } else { ?>
+      
+        <?php } else { ?>
         <h2 class="main-welcome-text"> You are not using a registered session? </h2>
         <br>
         <a href="registration.php"><button type="button" class="link-on-landing">Register now</button></a>
