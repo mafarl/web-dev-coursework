@@ -19,6 +19,8 @@ let distance;
 
 let level = 0;
 
+let current_level_score;
+
 let level_scores = [];
 
 let numMatches = 0;
@@ -110,13 +112,13 @@ function checkForMatch() {
 
             if (numberOfCards == 4){
                 clearInterval(clock);
-                level_scores.push(numCurrentAttempts);
+                level_scores.push(current_level_score);
                 console.log(level_scores);
                 win();
                 winVar = true;
             } else{
                 numMatches = 0;
-                level_scores.push(numCurrentAttempts);
+                level_scores.push(current_level_score);
                 numCurrentAttempts = 0;
                 removeCards();
                 createCards();
@@ -138,7 +140,21 @@ function checkForMatch() {
         const currentAttempts = document.getElementById("attempts-container").lastElementChild;
 
         overallAttempts.innerHTML = "Overall attempts: " + numAttempts;
-        currentAttempts.innerHTML = "Level " + (numberOfCards - 1) + " attempts: " + numCurrentAttempts;
+        //currentAttempts.innerHTML = "Level " + (numberOfCards - 1) + " attempts: " + numCurrentAttempts;
+
+        // Insert score here (not attempts)
+        level = Number(level);
+
+        if (level == 1) {
+            current_level_score = Math.round(0.2 * (100 - numCurrentAttempts + distance/1000));
+        } else if (level == 2){
+            current_level_score = Math.round(0.3 * (100 - numCurrentAttempts + distance/1000));
+        } else {
+            current_level_score = Math.round(0.5 * (100 - numCurrentAttempts + distance/1000));
+        }
+
+        currentAttempts.innerHTML = "Level " + (numberOfCards - 1) + " score: " + current_level_score;
+        
     }
 }
 
@@ -195,7 +211,7 @@ function resetBoard() {
 // Create card divs and img elements (=> create cards on the board)
 function createCards(){
     
-    let level = document.getElementById("level-storage").value;
+    level = document.getElementById("level-storage").value;
 
     while (allPairs.length != 5){
         createCardCombination(skinImages, eyesImages, mouthImages);
@@ -278,7 +294,10 @@ function win(){
         
         const scoreMessage = document.createElement("h2");
         scoreMessage.setAttribute("id", "h2-pairs");
-        const scoreNum = (100 - numAttempts) + Math.round(distance / 30000);
+        // Sum of scores of all three levels
+        const scoreNum = Math.round(level_scores.reduce(function(a, b){
+            return a + b;
+          }));
         const textNode = document.createTextNode("Your score: " + scoreNum);
         scoreMessage.appendChild(textNode); 
         cardBoard.appendChild(scoreMessage);
@@ -334,7 +353,9 @@ function win(){
         // Prints out score
         const scoreMessage = document.createElement("h2");
         scoreMessage.setAttribute("id", "h2-pairs");
-        const scoreNum = (100 - numAttempts) + Math.round(distance / 30000);
+        const scoreNum = Math.round(level_scores.reduce(function(a, b){
+            return a + b;
+          }));
         const textNode = document.createTextNode("Your score: " + scoreNum);
         scoreMessage.appendChild(textNode); 
         cardBoard.appendChild(scoreMessage);

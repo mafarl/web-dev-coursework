@@ -56,9 +56,17 @@
       $_SESSION['submissions'] = array();
     }
 
+    // check if the 'avatars' array exists in the session
+    // it will store username => array of avatar images
+    if (!isset($_SESSION['avatars'])) {
+      $_SESSION['avatars'] = array();
+    }
+
     // store user submissions in the session
     $_SESSION['submissions'][$_SESSION['username']] = $scores_array;
 
+    // store images chosen by a user
+    $_SESSION['avatars'][$_SESSION['username']] = array($_SESSION['skinImage'], $_SESSION['eyesImage'], $_SESSION['mouthImage']);
   } 
 
 
@@ -114,13 +122,40 @@
       margin: auto;
       margin-top: 50px;
       font-family: Verdana, Geneva, Tahoma, sans-serif;
-      box-shadow: 5px;  
+      box-shadow: 5px 5px 5px blue;;  
     }
 
     #links-wrapper{
       text-align: center;
       margin-left: auto;
       margin-right: auto;
+    }
+
+    .skin-leaderboard{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      width: 30px;
+    }
+
+    .eyes-leaderboard{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      width: 30px;
+    }
+
+    .mouth-leaderboard{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      width: 30px;
     }
   </style>
 </head>
@@ -142,6 +177,8 @@
         <thead>
           <tr>
             <th>Place</th>
+            <!-- For avatar -->
+            <th> </th>
             <th>Username</th>
             <th>Level 1 Score</th>
             <th>Level 2 Score</th>
@@ -180,6 +217,13 @@
               foreach ($_SESSION['submissions'] as $username => $scores) {
               echo '<tr>';
               echo '<td>' . $i . '</td>'; 
+              echo '<td style="position: relative; padding: 20px;">'; ?>
+
+              <img class="skin-leaderboard" src="<?php echo $_SESSION['avatars'][$username][0]; ?>">
+              <img class="eyes-leaderboard" src="<?php echo $_SESSION['avatars'][$username][1]; ?>">
+              <img class="mouth-leaderboard" src="<?php echo $_SESSION['avatars'][$username][2]; ?>"> 
+
+              <?php echo '</td>';
               echo '<td>' . $username . '</td>';
               echo '<td>' . $scores[0] . '</td>';
               echo '<td>' . $scores[1] . '</td>';
