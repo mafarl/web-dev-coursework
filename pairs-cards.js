@@ -18,7 +18,6 @@ let cardID = 0;
 let distance;
 
 let level = 0;
-
 let current_level_score;
 
 let level_scores = [];
@@ -109,6 +108,16 @@ function checkForMatch() {
         disableCards();
 
         if (numMatches == 5){
+            
+            // Send score to PHP via Ajax which will append score to the file
+            $.ajax({
+                type: "POST",
+                url: "storeScore.php",
+                data: {level: level, score: current_level_score},
+                success: function(data) {
+                    console.log("Score stored successfully");
+                }
+            });
 
             if (numberOfCards == 4){
                 clearInterval(clock);
@@ -456,6 +465,7 @@ function lostTime(){
 document.getElementById("button-to-start-game").addEventListener('click', createCards);
 const button = document.getElementById("button-to-start-game");
 button.addEventListener("click", checkTime);
+button.addEventListener("click", checkScore);
 let clock;
 
 function checkTime(){
@@ -473,5 +483,26 @@ function checkTime(){
         } else{
             timer.innerHTML = "Time left: " + Math.round(distance/1000) + "seconds";
         }
+    }, 1000);
+}
+
+function checkScore(){
+    clock = setInterval(function() {
+        
+        $.ajax({
+            type: "POST",
+            url: "checkScore.php",
+            data: {level: level, score: current_level_score},
+            success: function(data) {
+                if (data == 0){
+                    const cardBoardDiv = document.getElementById("game-board"); 
+                    cardBoardDiv.style.backgroundColor = "#FFD700";
+                } else {
+                    const cardBoardDiv = document.getElementById("game-board"); 
+                    cardBoardDiv.style.backgroundColor = "grey";
+                }
+            }
+        });
+
     }, 1000);
 }
