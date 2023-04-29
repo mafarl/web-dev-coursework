@@ -31,15 +31,21 @@
                 </div>
                 <div class="avatar-entry">
                     <p>Choose avatar:</p>
+
+                    <!-- Here will display a message with error if avatar wasn't chosen -->
+                    <?php if(isset($_SESSION["error_avatar"])) { ?>
+                        <p style="color:#ff1ca4; text-align:center;">You need to select your avatar to proceed</p>
+                    <?php }?>
+
                     <!-- Dropdown options for avatar -->
                     <div class="dropdowns">
-                        <select class="dropdown-content skin-select">
+                        <select class="dropdown-content skin-select" name="skin-select-name"> 
                             <option value="">Select skin</option>
                         </select>
-                        <select class="dropdown-content eyes-select">
+                        <select class="dropdown-content eyes-select" name="eyes-select-name">
                             <option value="">Select eyes</option>
                         </select>
-                        <select class="dropdown-content mouth-select">
+                        <select class="dropdown-content mouth-select" name="mouth-select-name">
                             <option value="">Select mouth</option>
                         </select>
                     </div>
@@ -53,7 +59,7 @@
 
                 <br>
                 <div class="button-entry">
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Submit" name="submit-button">
                 </div>
             </form>
         </div>
@@ -65,4 +71,5 @@
 <?php
     unset($_SESSION["error_set"]);
     unset($_SESSION["error_char"]);
+    unset($_SESSION['error_avatar']);
 ?>
