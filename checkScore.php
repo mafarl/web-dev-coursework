@@ -1,4 +1,7 @@
-<?php $level = $_POST['level'];
+<?php 
+session_start();
+
+$level = $_POST['level'];
 $score = $_POST['score'];
 
 // Open the file in read mode
@@ -13,9 +16,9 @@ while (($line = fgets($fp)) !== false) {
     $data = explode(',', $line);
 
     // Check if the level matches the requested level
-    if ($data[0] == $level) {
+    if ($data[1] == $level) {
         // Update the best score if the score is higher than the current best score
-        if ($data[1] > $score) {
+        if ($data[2] > $score) {
             $bestScore = -1;
             break;
         }

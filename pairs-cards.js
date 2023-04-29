@@ -108,21 +108,23 @@ function checkForMatch() {
         disableCards();
 
         if (numMatches == 5){
-            
-            // Send score to PHP via Ajax which will append score to the file
-            $.ajax({
-                type: "POST",
-                url: "storeScore.php",
-                data: {level: level, score: current_level_score},
-                success: function(data) {
-                    console.log("Score stored successfully");
-                }
-            });
 
             if (numberOfCards == 4){
                 clearInterval(clock);
                 level_scores.push(current_level_score);
-                console.log(level_scores);
+                
+                // Send score to PHP via Ajax which will append score to the file
+                for (let i = 0; i < level_scores.length; i++){
+                    $.ajax({
+                        type: "POST",
+                        url: "storeScore.php",
+                        data: {level: (i + 1), score: level_scores[i]},
+                        success: function(data) {
+                            console.log("Score stored successfully");
+                        }
+                    });
+                }
+                
                 win();
                 winVar = true;
             } else{
