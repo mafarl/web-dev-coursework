@@ -17,6 +17,8 @@ let allPairs = [];
 let cardID = 0;
 let distance;
 
+let once = true;
+
 let level = 0;
 let current_level_score;
 
@@ -76,6 +78,7 @@ function flipCard() {
     if (this === arrayOfCards[0]) return;
 
     this.classList.add('flip');
+
     this.removeEventListener('click', flipCard);
   
     let children = this.childNodes;
@@ -194,8 +197,8 @@ function unflipCards() {
     
     setTimeout(() => {
         arrayOfCards.forEach(card => card.classList.remove('flip'));
-
-
+        arrayOfCards.forEach(card => card.classList.remove('flip-card-front'));
+        arrayOfCards.forEach(card => card.classList.add('flip-card-back'));
 
         arrayOfCards.forEach(card => card.addEventListener('click', flipCard));
 
@@ -282,6 +285,13 @@ function createCards(){
 
 function win(){
 
+    // Stop timer
+    once = false;
+    arrayOfCards.forEach(card => card.removeEventListener('click', flipCard));
+    const button = document.getElementById("button-to-start-game");
+    button.removeEventListener("click", checkTime);
+    button.removeEventListener("click", checkScore);
+
     const attem = document.getElementById("attempts-container");
     const timee = document.getElementById("timer-container");
 
@@ -333,8 +343,17 @@ function win(){
         const textNode1 = document.createTextNode("Submit score");
 
         submitScore.onclick = function(){
-            // Add data to leaderboard session variable (var leaderboard)
-            // create form, input (not visible) and when click this button --> POST request is sent
+            // First check if already in the file (if yes - delete, use the same ajax for 'Play again')
+            // upload the new score again using 'storeScore.php' ajax
+            $.ajax({
+                type: "POST",
+                url: "deleteScore.php",
+                data: {end: false},
+                success: function(data) {
+                    console.log("Score stored successfully");
+                }
+            });
+
             window.location.href = "leaderboard.php";
         }
 
@@ -347,7 +366,17 @@ function win(){
         const textNode2 = document.createTextNode("Play again");
 
         playAgain.onclick = function(){
-            window.location.href = "pairscopy.html";
+
+            $.ajax({
+                type: "POST",
+                url: "deleteScore.php",
+                data: {end: true},
+                success: function(data) {
+                    console.log("Score stored successfully");
+                }
+            });
+
+            window.location.href = "pairs.php";
         }
 
         playAgain.appendChild(textNode2);
@@ -405,6 +434,12 @@ function win(){
 
 function lostAttempts(){
 
+    // Stop timer
+    once = false;
+    const button = document.getElementById("button-to-start-game");
+    button.removeEventListener("click", checkTime);
+    button.removeEventListener("click", checkScore);
+
     const cardBoard = document.getElementById("game-board");
     const wrapper = document.createElement("div");
     wrapper.setAttribute("id", "wrapper");
@@ -434,6 +469,11 @@ function lostAttempts(){
 }
 
 function lostTime(){
+
+    // Stop timer
+    const button = document.getElementById("button-to-start-game");
+    button.removeEventListener("click", checkTime);
+    button.removeEventListener("click", checkScore);
 
     const cardBoard = document.getElementById("game-board");
     const wrapper = document.createElement("div");
@@ -481,7 +521,11 @@ function checkTime(){
             button.removeEventListener("click", checkTime); 
             clearInterval(clock);
             removeCards(); 
-            lostTime();         
+            if (once){
+                lostTime(); 
+                once = false;
+            }
+                    
         } else{
             timer.innerHTML = "Time left: " + Math.round(distance/1000) + "seconds";
         }

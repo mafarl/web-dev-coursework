@@ -219,7 +219,13 @@ html,body{
   width: 100px;
   cursor: pointer;
   position: relative;
-  
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+.card.flip {
+  transform: rotateY(180deg);
 }
 
 .card img{
