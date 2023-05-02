@@ -18,7 +18,7 @@ while (($line = fgets($input_file)) !== false) {
     $data = explode(',', $line);
 
     // Add line number to the array if it's current user's score
-    if (data[0] == $_COOKIE['username']){
+    if ($data[0] == $_COOKIE['username']){
         array_push($users_lines, $line_number_all);
     }
 
