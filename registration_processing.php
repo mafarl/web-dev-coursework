@@ -37,9 +37,14 @@ if (empty($mouth)){
 }
 
 if (!$error_check) {
-        $_SESSION['username'] = $username;
-        $_SESSION['skinImage'] = $skin;
-        $_SESSION['eyesImage'] = $eyes;
-        $_SESSION['mouthImage'] = $mouth;
-        header("Location: ./index.php");
+    $expiration = time() + (60 * 60);
+    setcookie("username", $username, $expiration);
+    setcookie("skinImage", $skin, $expiration);
+    setcookie("eyesImage", $eyes, $expiration);
+    setcookie("mouthImage", $mouth, $expiration);
+    //$_SESSION['username'] = $username;
+    //$_SESSION['skinImage'] = $skin;
+    //$_SESSION['eyesImage'] = $eyes;
+    //$_SESSION['mouthImage'] = $mouth;
+    header("Location: ./index.php");
 }

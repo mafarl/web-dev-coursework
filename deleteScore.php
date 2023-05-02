@@ -18,7 +18,7 @@ while (($line = fgets($input_file)) !== false) {
     $data = explode(',', $line);
 
     // Add line number to the array if it's current user's score
-    if (data[0] == $_SESSION['username']){
+    if (data[0] == $_COOKIE['username']){
         array_push($users_lines, $line_number_all);
     }
 
@@ -35,9 +35,9 @@ if ($end == 0){
     // If there're more than 3 scores (more than 1 game)
     // Delete the last 3 lines from the array (need to leave only the last game's score)
     if ($users_array_length > 3){
-        unset($users_lines[$users_array_length - 1]);
-        unset($users_lines[$users_array_length - 2]);
-        unset($users_lines[$users_array_length - 3]);
+        array_slice($users_lines,-3);
+        array_slice($users_lines,-2);
+        array_slice($users_lines,-1);
 
         $output_file = fopen($file_path.'.tmp', 'w+');
 

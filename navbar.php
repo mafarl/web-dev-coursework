@@ -16,7 +16,7 @@
       </li>
       <?php 
       session_start();
-      if(isset($_SESSION['username'])){ ?>
+      if(isset($_COOKIE['username'])){ ?>
       <li class="nav-item" name="leaderboard">
         <a class="nav-link" href="leaderboard.php">Leaderboard</a>
       </li>
@@ -25,9 +25,9 @@
       <!-- On VM it is class="navbar-brand" -->
       <li class="nav-item" name="avatar">
           <div class="user-avatar">
-          <img class="skin-navbar" src="<?php echo $_SESSION['skinImage']; ?>">
-          <img class="eyes-navbar" src="<?php echo $_SESSION['eyesImage']; ?>">
-          <img class="mouth-navbar" src="<?php echo $_SESSION['mouthImage']; ?>">
+          <img class="skin-navbar" src="<?php echo $_COOKIE['skinImage']; ?>">
+          <img class="eyes-navbar" src="<?php echo $_COOKIE['eyesImage']; ?>">
+          <img class="mouth-navbar" src="<?php echo $_COOKIE['mouthImage']; ?>">
           </div>
       </li>
     </ul>

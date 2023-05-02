@@ -63,10 +63,10 @@
     }
 
     // store user submissions in the session
-    $_SESSION['submissions'][$_SESSION['username']] = $scores_array;
+    $_SESSION['submissions'][$_COOKIE['username']] = $scores_array;
 
     // store images chosen by a user
-    $_SESSION['avatars'][$_SESSION['username']] = array($_SESSION['skinImage'], $_SESSION['eyesImage'], $_SESSION['mouthImage']);
+    $_SESSION['avatars'][$_COOKIE['username']] = array($_COOKIE['skinImage'], $_COOKIE['eyesImage'], $_COOKIE['mouthImage']);
   } 
 
 

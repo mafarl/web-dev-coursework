@@ -16,8 +16,8 @@
   <div id="main">
     <img id="backgroundimage" src="background.jpg" border="0" alt="">
     <div id="text">
-      <?php if(isset($_SESSION['username'])) { 
-        echo "<h2 class='main-welcome-text'> Welcome to Pairs, " .$_SESSION['username']. "!</h2>";
+      <?php if(isset($_COOKIE['username'])) { 
+        echo "<h2 class='main-welcome-text'> Welcome to Pairs, " .$_COOKIE['username']. "!</h2>";
       ?>
         <br>
         <a href="pairs.php"><button type="button" class="link-on-landing">Click here to play</button></a>

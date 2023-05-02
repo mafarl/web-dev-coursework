@@ -113,7 +113,6 @@ function checkForMatch() {
         if (numMatches == 5){
 
             if (numberOfCards == 4){
-                clearInterval(clock);
                 level_scores.push(current_level_score);
                 
                 // Send score to PHP via Ajax which will append score to the file
@@ -197,12 +196,8 @@ function unflipCards() {
     
     setTimeout(() => {
         arrayOfCards.forEach(card => card.classList.remove('flip'));
-        arrayOfCards.forEach(card => card.classList.remove('flip-card-front'));
-        arrayOfCards.forEach(card => card.classList.add('flip-card-back'));
 
         arrayOfCards.forEach(card => card.addEventListener('click', flipCard));
-
-
 
         arrayOfCards.forEach(card => card.querySelectorAll('.emoji-pairs-card').forEach(img => img.setAttribute("hidden", "hidden")));
   
@@ -287,10 +282,8 @@ function win(){
 
     // Stop timer
     once = false;
-    arrayOfCards.forEach(card => card.removeEventListener('click', flipCard));
     const button = document.getElementById("button-to-start-game");
     button.removeEventListener("click", checkTime);
-    button.removeEventListener("click", checkScore);
 
     const attem = document.getElementById("attempts-container");
     const timee = document.getElementById("timer-container");
@@ -438,7 +431,6 @@ function lostAttempts(){
     once = false;
     const button = document.getElementById("button-to-start-game");
     button.removeEventListener("click", checkTime);
-    button.removeEventListener("click", checkScore);
 
     const cardBoard = document.getElementById("game-board");
     const wrapper = document.createElement("div");
@@ -473,7 +465,6 @@ function lostTime(){
     // Stop timer
     const button = document.getElementById("button-to-start-game");
     button.removeEventListener("click", checkTime);
-    button.removeEventListener("click", checkScore);
 
     const cardBoard = document.getElementById("game-board");
     const wrapper = document.createElement("div");
@@ -534,7 +525,6 @@ function checkTime(){
 
 function checkScore(){
     clock = setInterval(function() {
-        
         $.ajax({
             type: "POST",
             url: "checkScore.php",

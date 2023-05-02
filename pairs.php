@@ -51,7 +51,7 @@
         include 'navbar.php';
     ?>
     <script>
-        var session_set = <?php echo isset($_SESSION['username']) ? 'true' : 'false'; ?>;
+        var session_set = <?php echo isset($_COOKIE['username']) ? 'true' : 'false'; ?>;
     </script>
     <div id="main">
         <img id="backgroundimage" src="background.jpg" border="0" alt="">
