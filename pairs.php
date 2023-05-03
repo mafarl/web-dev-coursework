@@ -12,7 +12,7 @@
         overallAttempts.appendChild(textNode1);
 
         const currentAttempts = document.createElement("h3");
-        const textNode2 = document.createTextNode("Level " + 1 + " score: " + 0);
+        const textNode2 = document.createTextNode("Level " + 1 + " attempts: " + 0);
         currentAttempts.appendChild(textNode2);
 
         const parent = document.getElementById("attempts-container");

@@ -18,7 +18,6 @@ let cardID = 0;
 let distance;
 
 let level = 0;
-let current_level_score;
 
 let level_scores = [];
 
@@ -108,26 +107,16 @@ function checkForMatch() {
         disableCards();
 
         if (numMatches == 5){
-            
-            // Send score to PHP via Ajax which will append score to the file
-            $.ajax({
-                type: "POST",
-                url: "storeScore.php",
-                data: {level: level, score: current_level_score},
-                success: function(data) {
-                    console.log("Score stored successfully");
-                }
-            });
 
             if (numberOfCards == 4){
                 clearInterval(clock);
-                level_scores.push(current_level_score);
+                level_scores.push(numCurrentAttempts);
                 console.log(level_scores);
                 win();
                 winVar = true;
             } else{
                 numMatches = 0;
-                level_scores.push(current_level_score);
+                level_scores.push(numCurrentAttempts);
                 numCurrentAttempts = 0;
                 removeCards();
                 createCards();
@@ -149,21 +138,7 @@ function checkForMatch() {
         const currentAttempts = document.getElementById("attempts-container").lastElementChild;
 
         overallAttempts.innerHTML = "Overall attempts: " + numAttempts;
-        //currentAttempts.innerHTML = "Level " + (numberOfCards - 1) + " attempts: " + numCurrentAttempts;
-
-        // Insert score here (not attempts)
-        level = Number(level);
-
-        if (level == 1) {
-            current_level_score = Math.round(0.2 * (100 - numCurrentAttempts + distance/1000));
-        } else if (level == 2){
-            current_level_score = Math.round(0.3 * (100 - numCurrentAttempts + distance/1000));
-        } else {
-            current_level_score = Math.round(0.5 * (100 - numCurrentAttempts + distance/1000));
-        }
-
-        currentAttempts.innerHTML = "Level " + (numberOfCards - 1) + " score: " + current_level_score;
-        
+        currentAttempts.innerHTML = "Level " + (numberOfCards - 1) + " attempts: " + numCurrentAttempts;
     }
 }
 
@@ -220,7 +195,7 @@ function resetBoard() {
 // Create card divs and img elements (=> create cards on the board)
 function createCards(){
     
-    level = document.getElementById("level-storage").value;
+    let level = document.getElementById("level-storage").value;
 
     while (allPairs.length != 5){
         createCardCombination(skinImages, eyesImages, mouthImages);
@@ -303,10 +278,7 @@ function win(){
         
         const scoreMessage = document.createElement("h2");
         scoreMessage.setAttribute("id", "h2-pairs");
-        // Sum of scores of all three levels
-        const scoreNum = Math.round(level_scores.reduce(function(a, b){
-            return a + b;
-          }));
+        const scoreNum = (100 - numAttempts) + Math.round(distance / 30000);
         const textNode = document.createTextNode("Your score: " + scoreNum);
         scoreMessage.appendChild(textNode); 
         cardBoard.appendChild(scoreMessage);
@@ -362,9 +334,7 @@ function win(){
         // Prints out score
         const scoreMessage = document.createElement("h2");
         scoreMessage.setAttribute("id", "h2-pairs");
-        const scoreNum = Math.round(level_scores.reduce(function(a, b){
-            return a + b;
-          }));
+        const scoreNum = (100 - numAttempts) + Math.round(distance / 30000);
         const textNode = document.createTextNode("Your score: " + scoreNum);
         scoreMessage.appendChild(textNode); 
         cardBoard.appendChild(scoreMessage);
@@ -465,7 +435,6 @@ function lostTime(){
 document.getElementById("button-to-start-game").addEventListener('click', createCards);
 const button = document.getElementById("button-to-start-game");
 button.addEventListener("click", checkTime);
-button.addEventListener("click", checkScore);
 let clock;
 
 function checkTime(){
@@ -483,26 +452,5 @@ function checkTime(){
         } else{
             timer.innerHTML = "Time left: " + Math.round(distance/1000) + "seconds";
         }
-    }, 1000);
-}
-
-function checkScore(){
-    clock = setInterval(function() {
-        
-        $.ajax({
-            type: "POST",
-            url: "checkScore.php",
-            data: {level: level, score: current_level_score},
-            success: function(data) {
-                if (data == 0){
-                    const cardBoardDiv = document.getElementById("game-board"); 
-                    cardBoardDiv.style.backgroundColor = "#FFD700";
-                } else {
-                    const cardBoardDiv = document.getElementById("game-board"); 
-                    cardBoardDiv.style.backgroundColor = "grey";
-                }
-            }
-        });
-
     }, 1000);
 }

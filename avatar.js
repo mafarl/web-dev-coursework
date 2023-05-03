@@ -37,3 +37,19 @@ function replaceImage(select, img) {
 replaceImage(skinSelect, skinImg);
 replaceImage(eyesSelect, eyesImg);
 replaceImage(mouthSelect, mouthImg);
+
+select.addEventListener("change", function() {
+    var selectedOption = skinSelect.options[select.selectedIndex].value;
+	sessionStorage.setItem("selectedOption", selectedOption);
+});
+
+// Download avatar image
+downloadButton.addEventListener('click', () => {
+    html2canvas(document.querySelector('.avatar-container')).then(canvas => {
+        const avatarImage = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = 'avatar.png';
+        link.href = avatarImage;
+        link.click();
+    });
+});
