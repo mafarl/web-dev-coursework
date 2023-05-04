@@ -168,7 +168,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
 
   <div id="main" class="leaderboard">
-    <img id="backgroundimage" src="background.jpg" border="0" alt="">
+    <img id="backgroundimage" src="arcade-unsplash.jpg" border="0" alt="">
 
     <div id="wrapper-leaderboard">
       <h2 id="registration-h2">Leaderboard</h2>

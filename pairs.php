@@ -64,7 +64,7 @@
     <audio id="myAudio" src="audio_track.mp3"></audio>
 
     <div id="main">
-        <img id="backgroundimage" src="background.jpg" border="0" alt="">
+        <img id="backgroundimage" src="arcade-unsplash.jpg" border="0" alt="">
         <div id="feature-container" style="display:none;">
             <div id="timer-container" style="display:none; color:white;"></div>
             <div id="attempts-container" style="display:none; color:white;"></div>

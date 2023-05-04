@@ -14,7 +14,7 @@
         include 'navbar.php'; 
     ?>
     <div id="main"> 
-        <img id="backgroundimage" src="background.jpg" border="0" alt="">
+        <img id="backgroundimage" src="arcade-unsplash.jpg" border="0" alt="">
         <div class="data-entry">
             <form method="POST" action="./registration_processing.php">
                 <h2 id="registration-h2">Registration</h2>

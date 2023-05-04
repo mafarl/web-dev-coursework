@@ -14,7 +14,7 @@
     include 'navbar.php';
   ?>
   <div id="main">
-    <img id="backgroundimage" src="background.jpg" border="0" alt="">
+    <img id="backgroundimage" src="arcade-unsplash.jpg" border="0" alt="">
     <div id="text">
       <?php if(isset($_COOKIE['username'])) { 
         echo "<h2 class='main-welcome-text'> Welcome to Pairs, " .$_COOKIE['username']. "!</h2>";
