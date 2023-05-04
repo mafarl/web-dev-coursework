@@ -18,6 +18,7 @@ let cardID = 0;
 let distance;
 
 let once = true;
+let over = false;
 let startAudio = true;
 
 let level = 0;
@@ -270,6 +271,8 @@ function win(){
     // Reduce volume
     audio.volume = 0.4;
 
+    over = true;
+
     // Stop timer
     once = false;
     const button = document.getElementById("button-to-start-game");
@@ -317,18 +320,17 @@ function win(){
         hiddenInput.setAttribute("name", "level_scores");
         hiddenInput.setAttribute("value", level_scores);
         hiddenInput.value = level_scores;
-        console.log("Level scores: "+level_scores);
 
         formWrap.appendChild(hiddenInput);
 
         const submitScore = document.createElement("button");
         submitScore.setAttribute("id", "button-on-pairs-win");
         const textNode1 = document.createTextNode("Submit score");
-
+        
+        // Check the user doesn't have scores uploaded already
         submitScore.addEventListener('click', function(){submitScoreClickHandler('user');});
         submitScore.onclick = function(){
             // First check if already in the file (if yes - delete, use the same ajax for 'Play again')
-            // upload the new score again using 'storeScore.php' ajax
             // Pause the audio
             audio.pause();
             window.location.href = "leaderboard.php";
@@ -336,7 +338,6 @@ function win(){
 
         submitScore.appendChild(textNode1);
         formWrap.appendChild(submitScore);
-       //wrapper.appendChild(submitScore);
 
         const playAgain = document.createElement("button"); 
         playAgain.setAttribute("id", "button-on-pairs-win");
@@ -411,6 +412,8 @@ function lostAttempts(){
     // Reduce volume
     audio.volume = 0.4;
 
+    over = true;
+
     // Stop timer
     once = false;
     const button = document.getElementById("button-to-start-game");
@@ -455,6 +458,8 @@ function lostTime(){
 
     // Reduce volume
     audio.volume = 0.4;
+
+    over = true;
 
     // Stop timer
     const button = document.getElementById("button-to-start-game");
@@ -542,20 +547,23 @@ function checkScore(){
             }
         });
 
-        const currentAttempts = document.getElementById("attempts-container").lastElementChild;
+        if (!over){
+            const currentAttempts = document.getElementById("attempts-container").lastElementChild;
 
-        // Insert score here (not attempts)
-        level = Number(level);
+            // Insert score here (not attempts)
+            level = Number(level);
 
-        if (level == 1) {
-            current_level_score = Math.round(0.2 * (100 - numCurrentAttempts + distance/1000));
-        } else if (level == 2){
-            current_level_score = Math.round(0.3 * (100 - numCurrentAttempts + distance/1000));
-        } else {
-            current_level_score = Math.round(0.5 * (100 - numCurrentAttempts + distance/1000));
+            if (level == 1) {
+                current_level_score = Math.round(0.2 * (100 - numCurrentAttempts + distance/1000));
+            } else if (level == 2){
+                current_level_score = Math.round(0.3 * (100 - numCurrentAttempts + distance/1000));
+            } else {
+                current_level_score = Math.round(0.5 * (100 - numCurrentAttempts + distance/1000));
+            }
+
+            currentAttempts.innerHTML = "Level " + (numberOfCards - 1) + " score: " + current_level_score;
         }
-
-        currentAttempts.innerHTML = "Level " + (numberOfCards - 1) + " score: " + current_level_score;
+        
 
     }, 1000);
 }
