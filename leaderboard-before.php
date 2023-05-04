@@ -3,7 +3,13 @@
   session_start();
   include 'navbar.php'; 
 
-    $scores_array = [];
+  if (isset($_POST['level_scores'])) {
+    $unsplit = $_POST['level_scores'];
+    $scores_array = explode(",", $unsplit);
+
+    // set a cookie to store the session ID
+    setcookie('PHPSESSID', session_id(), time() + 3600);
+
     // check if the 'submissions' array exists in the session, if not, create it
     if (!isset($_SESSION['submissions'])) {
       $_SESSION['submissions'] = array();
@@ -15,29 +21,12 @@
       $_SESSION['avatars'] = array();
     }
 
-    if (file_exists('scores.txt')) {
-        $scores_file = file_get_contents('scores.txt');
-        $scores_lines = explode("\n", $scores_file);
-        foreach ($scores_lines as $line) {
-            $line_data = explode(",", $line);
-            $username = $line_data[0];
+    // store user submissions in the session
+    $_SESSION['submissions'][$_COOKIE['username']] = $scores_array;
 
-            if ($line_data[1] != '1'){
-                // here just push the result to the scores_array since it was already created at the 1st level
-                array_push($scores_array, $line_data[2]);
-            } elseif ($line_data[1] == '1'){
-                // Create scores_array for user and push first level result
-                $scores_array = [];
-                array_push($scores_array, $line_data[2]);
-                // store images chosen by a user
-                $_SESSION['avatars'][$username] = array($line_data[3], $line_data[4], $line_data[5]);
-            }
-
-            if ($line_data[1] == '3'){
-                $_SESSION['submissions'][$username] = $scores_array;
-            }
-        }
-    }
+    // store images chosen by a user
+    $_SESSION['avatars'][$_COOKIE['username']] = array($_COOKIE['skinImage'], $_COOKIE['eyesImage'], $_COOKIE['mouthImage']);
+  } 
 
 
   // Display the leaderboard table
@@ -209,9 +198,5 @@
     </div>
 
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

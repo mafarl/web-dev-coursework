@@ -18,6 +18,7 @@ let cardID = 0;
 let distance;
 
 let once = true;
+let startAudio = true;
 
 let level = 0;
 let current_level_score;
@@ -112,20 +113,17 @@ function checkForMatch() {
 
         if (numMatches == 5){
 
+            $.ajax({
+                type: "POST",
+                url: "storeScore.php",
+                data: {level: level, score: current_level_score},
+                success: function(data) {
+                    console.log("Score stored successfully");
+                }
+            });
+
             if (numberOfCards == 4){
                 level_scores.push(current_level_score);
-                
-                // Send score to PHP via Ajax which will append score to the file
-                for (let i = 0; i < level_scores.length; i++){
-                    $.ajax({
-                        type: "POST",
-                        url: "storeScore.php",
-                        data: {level: (i + 1), score: level_scores[i]},
-                        success: function(data) {
-                            console.log("Score stored successfully");
-                        }
-                    });
-                }
                 
                 win();
                 winVar = true;
@@ -153,7 +151,6 @@ function checkForMatch() {
         const currentAttempts = document.getElementById("attempts-container").lastElementChild;
 
         overallAttempts.innerHTML = "Overall attempts: " + numAttempts;
-        //currentAttempts.innerHTML = "Level " + (numberOfCards - 1) + " attempts: " + numCurrentAttempts;
 
         // Insert score here (not attempts)
         level = Number(level);
@@ -219,6 +216,12 @@ function resetBoard() {
 
 // Create card divs and img elements (=> create cards on the board)
 function createCards(){
+
+    //Play sound
+    if (startAudio){
+        audio.play();
+        startAudio = false;
+    }
     
     level = document.getElementById("level-storage").value;
 
@@ -280,6 +283,9 @@ function createCards(){
 
 function win(){
 
+    // Reduce volume
+    audio.volume = 0.4;
+
     // Stop timer
     once = false;
     const button = document.getElementById("button-to-start-game");
@@ -335,18 +341,12 @@ function win(){
         submitScore.setAttribute("id", "button-on-pairs-win");
         const textNode1 = document.createTextNode("Submit score");
 
+        submitScore.addEventListener('click', function(){submitScoreClickHandler('user');});
         submitScore.onclick = function(){
             // First check if already in the file (if yes - delete, use the same ajax for 'Play again')
             // upload the new score again using 'storeScore.php' ajax
-            $.ajax({
-                type: "POST",
-                url: "deleteScore.php",
-                data: {end: false},
-                success: function(data) {
-                    console.log("Score stored successfully");
-                }
-            });
-
+            // Pause the audio
+            audio.pause();
             window.location.href = "leaderboard.php";
         }
 
@@ -358,17 +358,12 @@ function win(){
         playAgain.setAttribute("id", "button-on-pairs-win");
         const textNode2 = document.createTextNode("Play again");
 
+        playAgain.addEventListener('click', function(){deleteLastScore('JohnDoe');});
         playAgain.onclick = function(){
 
-            $.ajax({
-                type: "POST",
-                url: "deleteScore.php",
-                data: {end: true},
-                success: function(data) {
-                    console.log("Score stored successfully");
-                }
-            });
-
+            deleteLastScore("username");
+            // Pause the audio
+            audio.pause();  
             window.location.href = "pairs.php";
         }
 
@@ -405,7 +400,7 @@ function win(){
         registerNow.setAttribute("id", "button-on-pairs-win");
         const text = document.createTextNode("Register now");
 
-        
+        registerNow.addEventListener('click', function(){deleteLastScore('JohnDoe');});
         registerNow.onclick = function(){
             window.location.href = "registration.php";
         }
@@ -417,6 +412,8 @@ function win(){
         playAgain.setAttribute("id", "button-on-pairs-win");
         const text2 = document.createTextNode("Play again");
         playAgain.appendChild(text2);
+
+        playAgain.addEventListener('click', function(){deleteLastScore('JohnDoe');});
         playAgain.onclick = function(){
             window.location.href = "pairs.php";
         }
@@ -426,6 +423,9 @@ function win(){
 }
 
 function lostAttempts(){
+
+    // Reduce volume
+    audio.volume = 0.4;
 
     // Stop timer
     once = false;
@@ -452,7 +452,14 @@ function lostAttempts(){
     playAgain.setAttribute("id", "button-on-pairs");
     const text = document.createTextNode("Play again");
     playAgain.appendChild(text);
+
+    if (level != 1){
+        deleteLastScore("username");
+    }
+
     playAgain.onclick = function(){
+        // Pause the audio
+        audio.pause();
         window.location.href = "pairs.php";
     }
     // add the button to the page
@@ -461,6 +468,9 @@ function lostAttempts(){
 }
 
 function lostTime(){
+
+    // Reduce volume
+    audio.volume = 0.4;
 
     // Stop timer
     const button = document.getElementById("button-to-start-game");
@@ -486,7 +496,14 @@ function lostTime(){
     playAgain.setAttribute("id", "button-on-pairs");
     const text = document.createTextNode("Play again");
     playAgain.appendChild(text);
+
+    if (level != 1){
+        deleteLastScore("username");
+    }
+
     playAgain.onclick = function(){
+        // Pause the audio
+        audio.pause();
         window.location.href = "pairs.php";
     }
     // add the button to the page
@@ -499,6 +516,7 @@ document.getElementById("button-to-start-game").addEventListener('click', create
 const button = document.getElementById("button-to-start-game");
 button.addEventListener("click", checkTime);
 button.addEventListener("click", checkScore);
+var audio = document.getElementById("myAudio");
 let clock;
 
 function checkTime(){
@@ -542,3 +560,28 @@ function checkScore(){
 
     }, 1000);
 }
+
+function submitScoreClickHandler(username) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "submit_score.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log("Score submitted successfully");
+      }
+    };
+    xhr.send("username=" + encodeURIComponent(username));
+}
+  
+  function deleteLastScore(username) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "delete_last_score.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log("Last score deleted successfully");
+      }
+    };
+    xhr.send("username=" + encodeURIComponent(username));
+  }
+  

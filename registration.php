@@ -22,9 +22,11 @@
                     <span>Username:</span>
                     <!-- In case there's an error with username - print something inside username input -->
                     <?php if(isset($_SESSION["error_set"])) { ?>
+                        <p style="color:black; text-align:center; font-weight: bold;">You need to set a username to proceed</p>
                         <input type="text" name="username" placeholder="Name not set">
                     <?php } else if (isset($_SESSION["error_char"])) { ?>
-                        <input type="text" name="username" placeholder="Names only contain letters and whitespace">
+                        <p style="color:black; text-align:center; font-weight: bold;">Invalid username</p>
+                        <input type="text" name="username" placeholder="Names only contain letters and whitespace" style="font-size:13px;">
                     <?php } else {?>
                         <input type="text" name="username" placeholder="Username">
                     <?php } ?>
@@ -34,7 +36,7 @@
 
                     <!-- Here will display a message with error if avatar wasn't chosen -->
                     <?php if(isset($_SESSION["error_avatar"])) { ?>
-                        <p style="color:#ff1ca4; text-align:center;">You need to select your avatar to proceed</p>
+                        <p style="color:black; text-align:center; font-weight: bold;">You need to select your avatar to proceed</p>
                     <?php }?>
 
                     <!-- Dropdown options for avatar -->
@@ -65,6 +67,10 @@
         </div>
     </div>
     <script src="avatar.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
 

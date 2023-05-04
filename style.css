@@ -1,3 +1,22 @@
+@media (max-width: 991px) { /* Adjust breakpoint as needed */
+  #game-board {
+    margin-top: 56px;
+  }
+
+  .navbar-collapse.show ~ #game-board{
+    margin-top: 230px;
+  }
+}
+
+@media (max-width: 991.98px) { /* Adjust breakpoint as needed */
+  .navbar-nav.avatar-in-navbar,
+  .skin-navbar,
+  .eyes-navbar,
+  .mouth-navbar {
+    display: none;
+  }
+}
+
 /* Background image */
 #backgroundimage{
   position: absolute;
@@ -94,8 +113,9 @@
   /* Registrantion form */
 .data-entry{
   border-radius: 5px;
-  border: solid 2px #8a826d;
-  background: rgba(242,242,242,0.5);
+  border: solid 1px black;
+  background: gray;
+  box-shadow: 5px 5px 5px blue;
   padding: 20px;
   width: 40%;
   margin: auto;
@@ -182,6 +202,7 @@ html,body{
   font-size: 20px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   z-index: 0;
+  box-shadow: 5px 5px 5px blue;
 }
 
 #button-to-start-game{

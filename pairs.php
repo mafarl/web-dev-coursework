@@ -3,6 +3,7 @@
 <script type="text/javascript">
     function hideShow(button) {
         button.style.visibility ="hidden";
+        document.getElementById("feature-container").style.display = "block";
         document.getElementById("cards-layout").style.display = "grid";
         document.getElementById("attempts-container").style.display = "block";
         document.getElementById("timer-container").style.display = "block";
@@ -53,10 +54,15 @@
     <script>
         var session_set = <?php echo isset($_COOKIE['username']) ? 'true' : 'false'; ?>;
     </script>
+
+    <audio id="myAudio" src="audio_track.mp3"></audio>
+
     <div id="main">
         <img id="backgroundimage" src="background.jpg" border="0" alt="">
-        <div id="timer-container" style="display:none; color:white;"></div>
-        <div id="attempts-container" style="display:none; color:white;"></div>
+        <div id="feature-container" style="display:none;">
+            <div id="timer-container" style="display:none; color:white;"></div>
+            <div id="attempts-container" style="display:none; color:white;"></div>
+        </div>
         <div id="game-board">
             <input id="level-storage" value="1" type="hidden">
             <button type="button" id="button-to-start-game" onclick='hideShow(this);'>Start the game</button>
@@ -70,5 +76,10 @@
         </div>
     </div>
     <script src="pairs-cards.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
+
 </body>
 </html>
