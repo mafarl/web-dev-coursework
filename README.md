@@ -4,8 +4,7 @@ Link to Azure VM: ml-lab-4d78f073-aa49-4f0e-bce2-31e5254052c7.ukwest.cloudapp.az
 
 ## All pages: ##
 - Background image set as specified
-- #main, names in navbar, fonts, colours as specified
-- style.css used for styling
+- #main, names in navbar, fonts, colours, borders as specified
 
 ## Responsive layout: ##
 - Pages styling: @media screen and (max-width: 768px) and @media (max-width: 991px)
