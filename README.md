@@ -1,67 +1,73 @@
-# ECM1417 Web Development coursework
+# ECM1417
 
-Link to Azure VM: ml-lab-4d78f073-aa49-4f0e-bce2-31e5254052c7.ukwest.cloudapp.azure.com:61394
+Azure VM: ml-lab-4d78f073-aa49-4f0e-bce2-31e5254052c7.ukwest.cloudapp.azure.com:61394
 
 ## All pages: ##
-- Background image set as specified
-- #main, names in navbar, fonts, colours, borders as specified
+- Background-image as specified
+- #main, navbar names, fonts, colours, borders as specified
 
 ## Responsive layout: ##
-- Pages styling: @media screen and (max-width: 768px) and @media (max-width: 991px)
+- Pages styling: @media screen and max-width 768px and 991px
 
 - navbar.php: 
   * Toggler appears when screen less 991px, if registered - avatar is hidden
-  * When toggler appears, blocks below go down (if can overflow)
+  * When toggler opened, blocks below go down (if can overflow)
 
 - registration.php:
-  * Moves down when toggler appears
+  * Moves down when toggler opened
+  * Smaller screen:
+    * Inputs/buttons fit into registration block 
 
 - pairs.php: 
-  * Moves down when toggler appears, attempts/score hidden
+  * Moves down when toggler opened, attempts/score hidden
   * Smaller screen: 
     * Text with attempts/score moves to the bottom
     * Size of cards changed to fit
   
 - leaderboard.php: 
-  * Moves down when toggler appears
-  * Smaller screen: button 2 under 2 instead 4 in row 
+  * Moves down when toggler opened
+  * Smaller screen:
+    * Buttons 2 under 2 instead of 4 in row 
 
 ## 0. navbar.php ##
-- Font, size, colour and position as specified
 - Avatar shown on the right when registered
 - Created using Bootstrap
 
-
 ## 1. index.php ## 
-- As specified
-- Says 'Welcome to Pairs, *username*' if registered
+-'Welcome to Pairs, *username*' if registered
 
 ## 2. registration.php (complex) ##
-- When hover over the username input, says 'Shouldn't contain !@#%&*()+=^{}[]—;:“'<>?/'
-- When invalid username, username already exists or no username is typed, says 'Names only contain letters and whitespace', 'Username already exists' and 'Name not set', respectively
-- When no avatar/username selected/username invalid, corresponding messages appear underneath the input - errors  stored in sessions for registration.php to analyse but then unset 
-- The user can't proceed if no username or avatar selected + invalid username
+- Username/avatar selection stored in cookies, expire in 1 hour (although sessions would have been more secure)
+- When hover over username input - says 'Shouldn't contain !@#%&*()+=^{}[]—;:“'<>?/'
+- When username invalid/already exists/none typed - 'Names only contain letters and whitespace', 'Username already exists' and 'Name not set', respectively inside input
+- When no avatar/username selected/invalid, corresponding messages appear underneath input - errors  stored in sessions for registration.php to analyse but then unset 
 - Avatar: Basic layout without options in HTML. Dropdown menus populated in avatar.js 
-- Username and avatar selection are stored in cookies which expire in 1 hour (although sessions would have been more secure)
+- Users choose avatar themselves using dropdown menus (compulsory)
 
 ## 3. pairs.php (complex) ##
-- 3 levels
-  - Level 1 score: Math.round(0.2 * (100 - numCurrentAttempts + distance/1000))
-  - Level 2 score: Math.round(0.3 * (100 - numCurrentAttempts + distance/1000))
-  - Level 3 score: Math.round(0.5 * (100 - numCurrentAttempts + distance/1000))
+- 3 levels (max theoretical score: 400)
+  1. 
+    - score: Math.round(0.2*(100-numCurrentAttempts+time-left/1000))
+    - no.cards: 10
+  2. 
+    - score: Math.round(0.3*(100-numCurrentAttempts+time-left/1000))
+    - no.cards: 15
+  3. 
+    - score: Math.round(0.5*(100-numCurrentAttempts+time-left/1000))
+    - no.cards:20
 - Max attempts: 100; max time: 300s
-- Random cards appear every game
-- If run out, corresponding message displayed
+- If run out, corresponding message displayed + Play again button
+- Random cards configured every game
+- Background changes to gold as specified
 - Can only win if pass all 3 levels
 - Scores are stored in a file (forever, even if VM turned off)
+- POST request sent to leaderboard.php if 'Submit score' clicked
+- 'Play again' - no scores saved, scores reset, redirected to 'Start game'
 (advanced)
-- Flipping animation of cards
-- When game starts, the sound is played. Volume is reduced when the game is over, turns off when button on the 'after-game' screen is clicked
-- Smaller screen: When toggler open, time and attempts hidden
+- Flipping animation
+- When game starts, sound is played. Volume is reduced when game over, turned off when button on 'after-game' screen clicked
 
 ## 4. leaderboard.php ##
 - Default: sorts by Total scores
-- If same score, will have same place
-- scores.txt used as a 'database' for different browsers to 'see' each other
-
-Additional pages: avatar.js, checkScore.php, delete_last_score.php, navbar.php, pairs-cards.js, registration_processing.php, storeScore.php, style.css, submit_score.php
+- If same score, have same place
+- scores.txt used as 'database' for different browsers to 'see' each other
