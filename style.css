@@ -270,10 +270,6 @@ html,body{
   height: 70%;
 }
 
-@media screen and (max-width: 768px) {
-  
-}
-
 /* After win */
 #wrapper{
   text-align: center;
