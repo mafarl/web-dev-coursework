@@ -4,19 +4,28 @@ Link to Azure VM: ml-lab-4d78f073-aa49-4f0e-bce2-31e5254052c7.ukwest.cloudapp.az
 
 ## All pages: ##
 - Background image set as specified
+- #main, names in navbar, fonts, colours as specified
 - style.css used for styling
 
 ## Responsive layout: ##
 - Pages styling: @media screen and (max-width: 768px) and @media (max-width: 991px)
-- navbar.php: * Toggler appears when screen less 991px, if registered - avatar is hidden
-              * When toggler appears, blocks below go down (if can overflow)
 
-- registration.php: - Moves down when toggler appears
-- pairs.php: * Moves down when toggler appears, attempts/score hidden
-             * Smaller screen: Text with attempts/score moves to the bottom
+- navbar.php: 
+  * Toggler appears when screen less 991px, if registered - avatar is hidden
+  * When toggler appears, blocks below go down (if can overflow)
 
-- leaderboard.php: * Moves down when toggler appears
-                   * Smaller screen: button 2 under 2 instead 4 in row 
+- registration.php:
+  * Moves down when toggler appears
+
+- pairs.php: 
+  * Moves down when toggler appears, attempts/score hidden
+  * Smaller screen: 
+    * Text with attempts/score moves to the bottom
+    * Size of cards changed to fit
+  
+- leaderboard.php: 
+  * Moves down when toggler appears
+  * Smaller screen: button 2 under 2 instead 4 in row 
 
 ## 0. navbar.php ##
 - Font, size, colour and position as specified
@@ -37,15 +46,15 @@ Link to Azure VM: ml-lab-4d78f073-aa49-4f0e-bce2-31e5254052c7.ukwest.cloudapp.az
 - Username and avatar selection are stored in cookies which expire in 1 hour (although sessions would have been more secure)
 
 ## 3. pairs.php (complex) ##
-- As specified
-- Random cards appear every game
-- Level 1 score: Math.round(0.2 * (100 - numCurrentAttempts + distance/1000))
-- Level 2 score: Math.round(0.3 * (100 - numCurrentAttempts + distance/1000))
-- Level 3 score: Math.round(0.5 * (100 - numCurrentAttempts + distance/1000))
+- 3 levels
+  - Level 1 score: Math.round(0.2 * (100 - numCurrentAttempts + distance/1000))
+  - Level 2 score: Math.round(0.3 * (100 - numCurrentAttempts + distance/1000))
+  - Level 3 score: Math.round(0.5 * (100 - numCurrentAttempts + distance/1000))
 - Max attempts: 100; max time: 300s
+- Random cards appear every game
 - If run out, corresponding message displayed
 - Can only win if pass all 3 levels
-- Scores are stored in a file (forever)
+- Scores are stored in a file (forever, even if VM turned off)
 (advanced)
 - Flipping animation of cards
 - When game starts, the sound is played. Volume is reduced when the game is over, turns off when button on the 'after-game' screen is clicked
@@ -54,6 +63,6 @@ Link to Azure VM: ml-lab-4d78f073-aa49-4f0e-bce2-31e5254052c7.ukwest.cloudapp.az
 ## 4. leaderboard.php ##
 - Default: sorts by Total scores
 - If same score, will have same place
-- scores.txt file used as a 'database' for different browsers to 'see' each other
+- scores.txt used as a 'database' for different browsers to 'see' each other
 
 Additional pages: avatar.js, checkScore.php, delete_last_score.php, navbar.php, pairs-cards.js, registration_processing.php, storeScore.php, style.css, submit_score.php
