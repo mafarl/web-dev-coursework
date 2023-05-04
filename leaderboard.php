@@ -92,9 +92,10 @@
       padding: 20px;
       width: 80%;
       margin: auto;
-      margin-top: 50px;
+      margin-top: 20px;
       font-family: Verdana, Geneva, Tahoma, sans-serif;
-      box-shadow: 5px 5px 5px blue;;  
+      box-shadow: 5px 5px 5px blue;  
+      transition: margin-top 0.5s ease-out;
     }
 
     #links-wrapper{
@@ -221,11 +222,33 @@
               }
               
 
-
               // Will be printed out with all the results seen but sorted according to the specific level
               $i = 1;
+              //unset($previous_score);
+              $previous_score = [];
+              $count = 0;
               // Loop through the leaderboard data and display each user's scores
               foreach ($_SESSION['submissions'] as $username => $scores) {
+                if ($level === null) {
+                  if (!empty($previous_score) || $count === 0){
+                    if (($previous_score[$count-1][0] + $previous_score[$count-1][1] + $previous_score[$count-1][2]) == ($scores[0] + $scores[1] + $scores[2])){
+                      $i = $i - 1;
+                    }
+                  }
+                } elseif ($level === 0){
+                  if (!empty($previous_score) || $count === 0){
+                    if (($previous_score[$count-1][0] + $previous_score[$count-1][1] + $previous_score[$count-1][2]) == ($scores[0] + $scores[1] + $scores[2])){
+                      $i = $i - 1;
+                    }
+                  }
+                } else {
+                  if (!empty($previous_score) || $count === 0){
+                    if ($previous_score[$count-1][$level-1] == $scores[$level-1]){
+                      $i = $i - 1;
+                    }
+                  }
+                }
+                
               echo '<tr>';
               echo '<td>' . $i . '</td>'; 
               echo '<td style="position: relative; padding: 20px;">'; ?>
@@ -243,6 +266,9 @@
               echo '<td>' . $totalscore . '</td>';
               echo '</tr>';
               $i = $i + 1;
+              $count = $count + 1;
+              $previous_score = [];
+              $previous_score[$count-1] = [$scores[0], $scores[1], $scores[2]];
               }
           ?>
           </tbody>

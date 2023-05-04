@@ -209,6 +209,7 @@ html,body{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   z-index: 0;
   box-shadow: 5px 5px 5px blue;
+  transition: margin-top 0.5s ease-out;
 }
 
 #button-to-start-game{

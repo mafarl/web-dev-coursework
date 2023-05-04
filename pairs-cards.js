@@ -21,7 +21,7 @@ let once = true;
 let startAudio = true;
 
 let level = 0;
-let current_level_score;
+let current_level_score = 80;
 
 let level_scores = [];
 
@@ -148,23 +148,7 @@ function checkForMatch() {
 
     if (!winVar){
         const overallAttempts = document.getElementById("attempts-container").firstElementChild;
-        const currentAttempts = document.getElementById("attempts-container").lastElementChild;
-
-        overallAttempts.innerHTML = "Overall attempts: " + numAttempts;
-
-        // Insert score here (not attempts)
-        level = Number(level);
-
-        if (level == 1) {
-            current_level_score = Math.round(0.2 * (100 - numCurrentAttempts + distance/1000));
-        } else if (level == 2){
-            current_level_score = Math.round(0.3 * (100 - numCurrentAttempts + distance/1000));
-        } else {
-            current_level_score = Math.round(0.5 * (100 - numCurrentAttempts + distance/1000));
-        }
-
-        currentAttempts.innerHTML = "Level " + (numberOfCards - 1) + " score: " + current_level_score;
-        
+        overallAttempts.innerHTML = "Overall attempts: " + numAttempts;     
     }
 }
 
@@ -557,6 +541,21 @@ function checkScore(){
                 }
             }
         });
+
+        const currentAttempts = document.getElementById("attempts-container").lastElementChild;
+
+        // Insert score here (not attempts)
+        level = Number(level);
+
+        if (level == 1) {
+            current_level_score = Math.round(0.2 * (100 - numCurrentAttempts + distance/1000));
+        } else if (level == 2){
+            current_level_score = Math.round(0.3 * (100 - numCurrentAttempts + distance/1000));
+        } else {
+            current_level_score = Math.round(0.5 * (100 - numCurrentAttempts + distance/1000));
+        }
+
+        currentAttempts.innerHTML = "Level " + (numberOfCards - 1) + " score: " + current_level_score;
 
     }, 1000);
 }

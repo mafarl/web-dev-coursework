@@ -27,6 +27,9 @@
                     <?php } else if (isset($_SESSION["error_char"])) { ?>
                         <p style="color:black; text-align:center; font-weight: bold;">Invalid username</p>
                         <input type="text" name="username" placeholder="Names only contain letters and whitespace" style="font-size:13px;">
+                    <?php } else if (isset($_SESSION["error_duplicate"])) { ?>
+                        <p style="color:black; text-align:center; font-weight: bold;">This username already exists</p>
+                        <input type="text" name="username" placeholder="Username already exists" style="font-size:13px;">
                     <?php } else {?>
                         <input type="text" name="username" placeholder="Username">
                     <?php } ?>
@@ -78,4 +81,5 @@
     unset($_SESSION["error_set"]);
     unset($_SESSION["error_char"]);
     unset($_SESSION['error_avatar']);
+    unset($_SESSION["error_duplicate"]);
 ?>

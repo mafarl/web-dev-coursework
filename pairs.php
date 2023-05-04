@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <script type="text/javascript">
+    let click = 0;
     function hideShow(button) {
         button.style.visibility ="hidden";
         document.getElementById("feature-container").style.display = "block";
@@ -13,7 +14,7 @@
         overallAttempts.appendChild(textNode1);
 
         const currentAttempts = document.createElement("h3");
-        const textNode2 = document.createTextNode("Level " + 1 + " score: " + 0);
+        const textNode2 = document.createTextNode("Level " + 1 + " score: " + 80);
         currentAttempts.appendChild(textNode2);
 
         const parent = document.getElementById("attempts-container");
@@ -45,6 +46,11 @@
     <title>Pairs</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .open-toggler{
+            margin-top: 100px;
+        }
+    </style>
 </head>
 <body>
     <?php 
@@ -76,10 +82,20 @@
         </div>
     </div>
     <script src="pairs-cards.js"></script>
-
+    <script> 
+        const toggler_button = document.getElementById("toggler");
+        toggler_button.addEventListener("click", function(){
+            click = click + 1;
+            if (click % 2 == 1){
+                const gameBoard = document.getElementById("game-board").classList.add("open-toggler");
+            } else {
+                const gameBoard = document.getElementById("game-board").classList.remove("open-toggler");
+            }
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
-
+    
 </body>
 </html>
