@@ -54,7 +54,6 @@
 
   <style>
     .leaderboard {
-      box-shadow: 5px 5px 5px #888888;
       padding: 20px;
     }
     
@@ -199,7 +198,12 @@
               $level = $_GET['level'] ?? null;
               if ($level === null) {
                 // Display error message or redirect to homepage
-                exit;
+                $sums = array();
+                  foreach ($_SESSION['submissions'] as $username => $scores) {
+                      $sums[$username] = array_sum($scores);
+                      
+                  }
+                  array_multisort($sums, SORT_DESC, $_SESSION['submissions']);
               }
               
               if ($level == 0){
