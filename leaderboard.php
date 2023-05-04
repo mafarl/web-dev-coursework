@@ -45,6 +45,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Leaderboard</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -101,6 +104,35 @@
       margin-right: auto;
     }
 
+    @media screen and (max-width: 768px) {
+      #links-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      
+      .link-on-landing {
+        max-width: 50%;
+      }
+      
+      .link-on-landing:nth-child(1), 
+      .link-on-landing:nth-child(2) {
+        order: 1;
+        padding: 7px;
+        margin: 5px;
+      }
+      
+      .link-on-landing:nth-child(3), 
+      .link-on-landing:nth-child(4) {
+        order: 2;
+        padding: 7px;
+        margin: 5px;
+      }
+    }
+
+
     .skin-leaderboard{
       position: absolute;
       top: 50%;
@@ -130,6 +162,11 @@
   </style>
 </head>
 <body>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
+
   <div id="main" class="leaderboard">
     <img id="backgroundimage" src="background.jpg" border="0" alt="">
 
@@ -210,8 +247,5 @@
 
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

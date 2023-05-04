@@ -1,20 +1,18 @@
 @media (max-width: 991px) { /* Adjust breakpoint as needed */
-  #game-board {
-    margin-top: 56px;
-  }
 
-  .navbar-collapse.show ~ #game-board{
-    margin-top: 230px;
-  }
-}
-
-@media (max-width: 991.98px) { /* Adjust breakpoint as needed */
   .navbar-nav.avatar-in-navbar,
   .skin-navbar,
   .eyes-navbar,
   .mouth-navbar {
     display: none;
   }
+
+}
+
+#main{
+  width: auto;
+  height: auto;
+  overflow: hidden;
 }
 
 /* Background image */
@@ -94,10 +92,11 @@
     display: flex;
     justify-content: center;
     margin: 20px 0;
+    width: auto;
   }
   
   .dropdowns select {
-    margin: 0 24px;
+    margin: 0 10px;
     background-color: blue;
     color: white;
     padding: 16px;
@@ -105,6 +104,7 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border: none;
     border-radius: 4px;
+    width: 30%;
   }
 
   /* Change color of dropdown links on hover */
@@ -121,6 +121,12 @@
   margin: auto;
   margin-top: 50px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+@media screen and (max-width: 768px) {
+  .data-entry {
+    width: 80%;
+  }
 }
 
 .username-entry, .avatar-entry{
@@ -174,8 +180,8 @@ input[type=submit] {
   height:40px;
   width:40px;
   top: 0;
-  right: 0;
-  transform: translate(-40%, 20%);
+  /*right: 0;
+  transform: translate(-40%, 20%); */
 }
 
 .avatar-in-navbar{
@@ -216,12 +222,6 @@ html,body{
   transform: translate(-50%, -50%);
 }
 
-#main{
-  width:100%;
-  height:100%;
-  overflow: hidden;
-}
-
 #cards-layout{ 
   position: absolute;
   left: 50%;
@@ -256,6 +256,10 @@ html,body{
   transform: translate(-50%, -50%);
   width: 70%;
   height: 70%;
+}
+
+@media screen and (max-width: 768px) {
+  
 }
 
 /* After win */

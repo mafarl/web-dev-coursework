@@ -14,7 +14,7 @@ if(empty($username)) {
     $error_check = true;
     header("Location: ./registration.php");
 }
-if (!preg_match("/^[a-zA-Z ]*$/",$username)) {
+if (!preg_match("/^[a-zA-Z0-9 ]*$/",$username)) {
     $_SESSION["error_char"] = "Invalid name";
     $error_check = true;
     header("Location: ./registration.php");
