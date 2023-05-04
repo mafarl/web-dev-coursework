@@ -11,7 +11,7 @@ Azure VM: ml-lab-4d78f073-aa49-4f0e-bce2-31e5254052c7.ukwest.cloudapp.azure.com:
 
 - navbar.php: 
   * Toggler appears when screen less 991px, if registered - avatar is hidden
-  * When toggler opened, blocks below go down (if can overflow)
+  * When toggler opened, blocks below go down
 
 - registration.php:
   * Moves down when toggler opened
@@ -20,13 +20,13 @@ Azure VM: ml-lab-4d78f073-aa49-4f0e-bce2-31e5254052c7.ukwest.cloudapp.azure.com:
 
 - pairs.php: 
   * Moves down when toggler opened, attempts/score hidden
-  * Smaller screen: 
+  * Smaller: 
     * Text with attempts/score moves to the bottom
     * Size of cards changed to fit
   
 - leaderboard.php: 
   * Moves down when toggler opened
-  * Smaller screen:
+  * Smaller:
     * Buttons 2 under 2 instead of 4 in row 
 
 ## 0. navbar.php ##
@@ -59,10 +59,10 @@ Azure VM: ml-lab-4d78f073-aa49-4f0e-bce2-31e5254052c7.ukwest.cloudapp.azure.com:
 - If run out, corresponding message displayed + Play again button
 - Random cards configured every game
 - Background changes to gold as specified
-- Can only win if pass all 3 levels
-- Scores are stored in a file (forever, even if VM turned off)
-- POST request sent to leaderboard.php if 'Submit score' clicked
-- 'Play again' - no scores saved, scores reset, redirected to 'Start game'
+- Must pass all 3 levels
+- Scores stored in file (forever, even if VM turned off)
+- POST request sent to leaderboard.php if 'Submit score' clicked (registered)
+- 'Play again' - no scores saved, scores reset, redirected to 'Start game' (registered/unregistered)
 (advanced)
 - Flipping animation
 - When game starts, sound is played. Volume is reduced when game over, turned off when button on 'after-game' screen clicked
