@@ -216,6 +216,22 @@ html,body{
   transition: margin-top 0.5s ease-out;
 }
 
+@media screen and (max-width: 768px) {
+  #feature-container{
+    position:absolute;
+    top: 85%
+  }
+
+  #game-board{
+    width: 80%;
+    height: 70%;
+  }
+
+  #timer-container h3, #attempts-container h3 {
+    font-size: 25px;
+  }
+}
+
 #button-to-start-game{
   background-color: blue;
   color: white;

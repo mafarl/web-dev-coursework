@@ -88,10 +88,10 @@
             click = click + 1;
             if (click % 2 == 1){
                 const gameBoard = document.getElementById("game-board").classList.add("open-toggler");
-                const feature_container = document.getElementById("feature-container").style.display ="none";
+                const feature_container1 = document.getElementById("feature-container").style.display ="none";
             } else {
                 const gameBoard = document.getElementById("game-board").classList.remove("open-toggler");
-                const feature_container = document.getElementById("feature-container").style.display = "block";
+                const feature_container1 = document.getElementById("feature-container").style.display = "block";
             }
         });
     </script>
