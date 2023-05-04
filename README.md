@@ -65,7 +65,8 @@ Azure VM: ml-lab-4d78f073-aa49-4f0e-bce2-31e5254052c7.ukwest.cloudapp.azure.com:
 - 'Play again' - no scores saved, scores reset, redirected to 'Start game' (registered/unregistered)
 (advanced)
 - Flipping animation
-- When game starts, sound is played. Volume is reduced when game over, turned off when button on 'after-game' screen clicked
+- When game starts, sound is played (right-free: Wish You'd Never Left, Youtube Audio Library)
+- Volume is reduced when game over, turned off when button on 'after-game' screen clicked
 
 ## 4. leaderboard.php ##
 - Default: sorts by Total scores
