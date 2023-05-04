@@ -16,8 +16,8 @@
   <div id="main">
     <img id="backgroundimage" src="background.jpg" border="0" alt="">
     <div id="text">
-      <?php if(isset($_SESSION['username'])) { 
-        echo "<h2 class='main-welcome-text'> Welcome to Pairs, " .$_SESSION['username']. "!</h2>";
+      <?php if(isset($_COOKIE['username'])) { 
+        echo "<h2 class='main-welcome-text'> Welcome to Pairs, " .$_COOKIE['username']. "!</h2>";
       ?>
         <br>
         <a href="pairs.php"><button type="button" class="link-on-landing">Click here to play</button></a>
@@ -29,5 +29,10 @@
       <?php } ?>
     </div>
   </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
+
 </body>
 </html>

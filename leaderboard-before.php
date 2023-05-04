@@ -3,7 +3,13 @@
   session_start();
   include 'navbar.php'; 
 
-    $scores_array = [];
+  if (isset($_POST['level_scores'])) {
+    $unsplit = $_POST['level_scores'];
+    $scores_array = explode(",", $unsplit);
+
+    // set a cookie to store the session ID
+    setcookie('PHPSESSID', session_id(), time() + 3600);
+
     // check if the 'submissions' array exists in the session, if not, create it
     if (!isset($_SESSION['submissions'])) {
       $_SESSION['submissions'] = array();
@@ -15,29 +21,12 @@
       $_SESSION['avatars'] = array();
     }
 
-    if (file_exists('scores.txt')) {
-        $scores_file = file_get_contents('scores.txt');
-        $scores_lines = explode("\n", $scores_file);
-        foreach ($scores_lines as $line) {
-            $line_data = explode(",", $line);
-            $username = $line_data[0];
+    // store user submissions in the session
+    $_SESSION['submissions'][$_COOKIE['username']] = $scores_array;
 
-            if ($line_data[1] != '1'){
-                // here just push the result to the scores_array since it was already created at the 1st level
-                array_push($scores_array, $line_data[2]);
-            } elseif ($line_data[1] == '1'){
-                // Create scores_array for user and push first level result
-                $scores_array = [];
-                array_push($scores_array, $line_data[2]);
-                // store images chosen by a user
-                $_SESSION['avatars'][$username] = array($line_data[3], $line_data[4], $line_data[5]);
-            }
-
-            if ($line_data[1] == '3'){
-                $_SESSION['submissions'][$username] = $scores_array;
-            }
-        }
-    }
+    // store images chosen by a user
+    $_SESSION['avatars'][$_COOKIE['username']] = array($_COOKIE['skinImage'], $_COOKIE['eyesImage'], $_COOKIE['mouthImage']);
+  } 
 
 
   // Display the leaderboard table
@@ -45,15 +34,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Leaderboard</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <style>
     .leaderboard {
+      box-shadow: 5px 5px 5px #888888;
       padding: 20px;
     }
     
@@ -92,10 +79,9 @@
       padding: 20px;
       width: 80%;
       margin: auto;
-      margin-top: 20px;
+      margin-top: 50px;
       font-family: Verdana, Geneva, Tahoma, sans-serif;
-      box-shadow: 5px 5px 5px blue;  
-      transition: margin-top 0.5s ease-out;
+      box-shadow: 5px 5px 5px blue;;  
     }
 
     #links-wrapper{
@@ -103,35 +89,6 @@
       margin-left: auto;
       margin-right: auto;
     }
-
-    @media screen and (max-width: 768px) {
-      #links-wrapper {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-      
-      .link-on-landing {
-        max-width: 50%;
-      }
-      
-      .link-on-landing:nth-child(1), 
-      .link-on-landing:nth-child(2) {
-        order: 1;
-        padding: 7px;
-        margin: 5px;
-      }
-      
-      .link-on-landing:nth-child(3), 
-      .link-on-landing:nth-child(4) {
-        order: 2;
-        padding: 7px;
-        margin: 5px;
-      }
-    }
-
 
     .skin-leaderboard{
       position: absolute;
@@ -162,11 +119,6 @@
   </style>
 </head>
 <body>
-
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
-
   <div id="main" class="leaderboard">
     <img id="backgroundimage" src="background.jpg" border="0" alt="">
 
@@ -199,12 +151,7 @@
               $level = $_GET['level'] ?? null;
               if ($level === null) {
                 // Display error message or redirect to homepage
-                $sums = array();
-                  foreach ($_SESSION['submissions'] as $username => $scores) {
-                      $sums[$username] = array_sum($scores);
-                      
-                  }
-                  array_multisort($sums, SORT_DESC, $_SESSION['submissions']);
+                exit;
               }
               
               if ($level == 0){
@@ -222,33 +169,11 @@
               }
               
 
+
               // Will be printed out with all the results seen but sorted according to the specific level
               $i = 1;
-              //unset($previous_score);
-              $previous_score = [];
-              $count = 0;
               // Loop through the leaderboard data and display each user's scores
               foreach ($_SESSION['submissions'] as $username => $scores) {
-                if ($level == null) {
-                  if (!empty($previous_score) || $count != 0){
-                    if (($previous_score[$count-1][0] + $previous_score[$count-1][1] + $previous_score[$count-1][2]) == ($scores[0] + $scores[1] + $scores[2])){
-                      $i = $i - 1;
-                    }
-                  }
-                } elseif ($level == 0){
-                  if (!empty($previous_score) || $count != 0){
-                    if (($previous_score[$count-1][0] + $previous_score[$count-1][1] + $previous_score[$count-1][2]) == ($scores[0] + $scores[1] + $scores[2])){
-                      $i = $i - 1;
-                    }
-                  }
-                } else {
-                  if (!empty($previous_score) || $count != 0){
-                    if ($previous_score[$count-1][$level-1] == $scores[$level-1]){
-                      $i = $i - 1;
-                    }
-                  }
-                }
-                
               echo '<tr>';
               echo '<td>' . $i . '</td>'; 
               echo '<td style="position: relative; padding: 20px;">'; ?>
@@ -266,16 +191,16 @@
               echo '<td>' . $totalscore . '</td>';
               echo '</tr>';
               $i = $i + 1;
-              $count = $count + 1;
-              $previous_score = [];
-              $previous_score[$count-1] = [$scores[0], $scores[1], $scores[2]];
               }
           ?>
           </tbody>
       </table>
     </div>
-
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
 
 </body>
 </html>
