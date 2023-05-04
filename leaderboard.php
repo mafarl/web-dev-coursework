@@ -229,20 +229,20 @@
               $count = 0;
               // Loop through the leaderboard data and display each user's scores
               foreach ($_SESSION['submissions'] as $username => $scores) {
-                if ($level === null) {
-                  if (!empty($previous_score) || $count === 0){
+                if ($level == null) {
+                  if (!empty($previous_score) || $count != 0){
                     if (($previous_score[$count-1][0] + $previous_score[$count-1][1] + $previous_score[$count-1][2]) == ($scores[0] + $scores[1] + $scores[2])){
                       $i = $i - 1;
                     }
                   }
-                } elseif ($level === 0){
-                  if (!empty($previous_score) || $count === 0){
+                } elseif ($level == 0){
+                  if (!empty($previous_score) || $count != 0){
                     if (($previous_score[$count-1][0] + $previous_score[$count-1][1] + $previous_score[$count-1][2]) == ($scores[0] + $scores[1] + $scores[2])){
                       $i = $i - 1;
                     }
                   }
                 } else {
-                  if (!empty($previous_score) || $count === 0){
+                  if (!empty($previous_score) || $count != 0){
                     if ($previous_score[$count-1][$level-1] == $scores[$level-1]){
                       $i = $i - 1;
                     }
